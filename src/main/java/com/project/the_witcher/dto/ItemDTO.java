@@ -11,6 +11,7 @@ public record ItemDTO(
         String location,
         Double value,
         ItemType type,
-        ItemRarity rarity
+        ItemRarity rarity,
+        List<MonsterDTO> monsterThatDrop
 ) {
 }
