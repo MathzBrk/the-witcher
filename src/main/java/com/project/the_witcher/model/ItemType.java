@@ -5,5 +5,13 @@ public enum ItemType {
     POTION,
     ARMOR,
     CONSUMABLE,
-    MISC
+    MISC;
+
+    public static ItemType fromString(String string) {
+        for (ItemType itemType : ItemType.values()) {
+            if(itemType.name().equalsIgnoreCase(string)) {
+                return itemType;
+            }
+        } throw new IllegalArgumentException("Invalid item type: " + string);
+    }
 }

@@ -18,4 +18,12 @@ public enum CharacterCategory {
     public String getDescription() {
         return description;
     }
+
+    public static CharacterCategory fromString(String category) {
+        for (CharacterCategory characterCategory : CharacterCategory.values()) {
+            if(characterCategory.name().equalsIgnoreCase(category)) {
+                return characterCategory;
+            }
+        } throw new IllegalArgumentException("Invalid category: " + category);
+    }
 }
