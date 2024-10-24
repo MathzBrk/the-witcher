@@ -14,7 +14,9 @@ public class Item {
     private String description;
     private String location;
     private Double value;
+    @Enumerated(EnumType.STRING)
     private ItemType type;
+    @Enumerated(EnumType.STRING)
     private ItemRarity rarity;
     @ManyToMany(mappedBy = "possibleDrops")
     private List<Monster> monsterThatDrop;

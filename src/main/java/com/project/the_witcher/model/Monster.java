@@ -11,10 +11,17 @@ public class Monster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private MonsterCategory category;
     private String description;
     @ManyToMany
     private List<Item> possibleDrops;
+
+    public Monster(String name, MonsterCategory category, String description) {
+        this.name = name;
+        this.category = category;
+        this.description = description;
+    }
 
     public void setId(Long id) {
         this.id = id;
