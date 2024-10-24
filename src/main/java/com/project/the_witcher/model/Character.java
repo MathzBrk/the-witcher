@@ -11,6 +11,18 @@ public class Character {
     private Long id;
     private String name;
     private String gender;
+    @Enumerated(EnumType.STRING)
+    private CharacterCategory category;
+    private String background;
+    @ManyToMany
+    private List<Quest> questsInvolved;
+
+    public Character(String name, String gender, CharacterCategory category, String background) {
+        this.name = name;
+        this.gender = gender;
+        this.category = category;
+        this.background = background;
+    }
 
     @Override
     public String toString() {
@@ -24,8 +36,6 @@ public class Character {
                 '}';
     }
 
-    private CharacterCategory category;
-    private String background;
 
     public String getName() {
         return name;
@@ -67,8 +77,6 @@ public class Character {
         this.questsInvolved = questsInvolved;
     }
 
-    @ManyToMany
-    private List<Quest> questsInvolved;
 
     public Character() {}
 
