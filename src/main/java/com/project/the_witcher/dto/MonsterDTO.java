@@ -6,7 +6,6 @@ import java.util.List;
 public record MonsterDTO(
         String name,
         MonsterCategory category,
-        String description,
-        List<ItemDTO> possibleDrops
+        String description
 ) {
 }
