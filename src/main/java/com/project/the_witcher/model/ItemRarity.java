@@ -5,5 +5,13 @@ public enum ItemRarity {
     UNCOMMON,
     RARE,
     EPIC,
-    LEGENDARY
+    LEGENDARY;
+
+    public static ItemRarity fromString(String string) {
+        for(ItemRarity rarity : ItemRarity.values()){
+            if(rarity.name().equalsIgnoreCase(string)){
+                return rarity;
+            }
+        }throw new IllegalArgumentException("Invalid item rarity: " + string);
+    }
 }

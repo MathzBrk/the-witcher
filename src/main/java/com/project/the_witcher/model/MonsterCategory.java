@@ -6,5 +6,15 @@ public enum MonsterCategory {
     UNDEAD,
     DEMON,
     HUMAN,
-    DRAGON
+    DRAGON;
+
+    public static MonsterCategory fromString(String category) {
+        for(MonsterCategory mc : MonsterCategory.values()) {
+            if(mc.name().equalsIgnoreCase(category)) {
+                return mc;
+            }
+        }
+        throw new IllegalArgumentException("Invalid Category: " + category);
+    }
 }
+
