@@ -1,7 +1,7 @@
 package com.project.the_witcher;
 
+import com.project.the_witcher.dto.MonsterDTO;
 import com.project.the_witcher.model.*;
-import com.project.the_witcher.model.Character;
 import com.project.the_witcher.repository.CharacterRepository;
 import com.project.the_witcher.repository.ItemRepository;
 import com.project.the_witcher.repository.MonsterRepository;
@@ -17,9 +17,12 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private ItemRepository itemRepository;
+
     @Autowired
     private MonsterRepository monsterRepository;
-    @Autowired CharacterRepository characterRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,5 +30,6 @@ public class DataLoader implements CommandLineRunner {
         itemRepository.deleteAll();
         monsterRepository.deleteAll();
         characterRepository.deleteAll();
+
     }
 }

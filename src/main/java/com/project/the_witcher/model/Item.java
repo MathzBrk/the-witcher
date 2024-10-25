@@ -18,7 +18,12 @@ public class Item {
     private ItemType type;
     @Enumerated(EnumType.STRING)
     private ItemRarity rarity;
-    @ManyToMany(mappedBy = "possibleDrops")
+    @ManyToMany
+    @JoinTable(
+            name = "item_monster", // nome da tabela de junção
+            joinColumns = @JoinColumn(name = "item_id"), // coluna que faz referência ao Item
+            inverseJoinColumns = @JoinColumn(name = "monster_id") // coluna que faz referência ao Monster
+    )
     private List<Monster> monsterThatDrop;
 
     public List<Monster> getMonsterThatDrop() {

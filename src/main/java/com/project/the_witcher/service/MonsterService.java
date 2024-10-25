@@ -35,7 +35,7 @@ public class MonsterService {
         return new MonsterDTO(monster.getName(), monster.getCategory(), monster.getDescription());
     }
 
-    public List<MonsterDTO> convertMonstersToMonsterDTO(List<Monster> monsterList) {
+    public static List<MonsterDTO> convertMonstersToMonsterDTO(List<Monster> monsterList) {
         return monsterList.stream()
                 .map(m -> new MonsterDTO(m.getName(),m.getCategory(),m.getDescription()))
                 .collect(Collectors.toList());
