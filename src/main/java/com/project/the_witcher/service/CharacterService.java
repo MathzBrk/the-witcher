@@ -14,7 +14,7 @@ public class CharacterService {
     private CharacterRepository characterRepository;
 
     public CharacterDTO findCharacterByName(String name) {
-        return convertCharacterToDTO(characterRepository.findByName(name));
+        return convertCharacterToDTO(characterRepository.findByNameContainingIgnoreCase(name));
     }
 
     public List<CharacterDTO> findAllCharacters() {
