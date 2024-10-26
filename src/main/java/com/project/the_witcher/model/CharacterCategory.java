@@ -1,17 +1,18 @@
 package com.project.the_witcher.model;
 
 public enum CharacterCategory {
-    WITCHER("Monster hunter with special abilities"),
-    SORCERESS("Female magic user"),
-    HEALER("Character with healing abilities"),
     BARD("Musician and storyteller"),
+    COMMONER("Regular citizen without special status"),
+    HEALER("Character with healing abilities"),
+    KING("King of a Kingdom"),
     MERCHANT("Trader of goods"),
     SOLDIER("Member of the military"),
-    COMMONER("Regular citizen without special status");
+    SORCERESS("Female magic user"),
+    WITCHER("Monster hunter with special abilities");
 
     private final String description;
 
-    CharacterCategory(String description) {
+    CharacterCategory( String description ) {
         this.description = description;
     }
 
@@ -19,11 +20,12 @@ public enum CharacterCategory {
         return description;
     }
 
-    public static CharacterCategory fromString(String category) {
+    public static CharacterCategory fromString( String category ) {
         for (CharacterCategory characterCategory : CharacterCategory.values()) {
-            if(characterCategory.name().equalsIgnoreCase(category)) {
+            if (characterCategory.name().equalsIgnoreCase(category)) {
                 return characterCategory;
             }
-        } throw new IllegalArgumentException("Invalid category: " + category);
+        }
+        throw new IllegalArgumentException("Invalid category: " + category);
     }
 }

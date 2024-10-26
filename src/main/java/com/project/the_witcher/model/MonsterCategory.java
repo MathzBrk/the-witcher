@@ -8,7 +8,9 @@ public enum MonsterCategory {
     HUMAN,
     REPTILE,
     SPECTER,
-    DRAGON;
+    DRAGON,
+    RELICT,
+    NECROPHAGE;
 
     public static MonsterCategory fromString(String category) {
         for(MonsterCategory mc : MonsterCategory.values()) {
