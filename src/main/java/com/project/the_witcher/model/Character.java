@@ -2,6 +2,7 @@ package com.project.the_witcher.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,12 @@ public class Character {
     @Enumerated(EnumType.STRING)
     private CharacterCategory category;
     private String background;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "character_quest",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "quest_id")
+    )
     private List<Quest> questsInvolved;
 
     public Character(String name, String gender, CharacterCategory category, String background) {
@@ -22,6 +28,7 @@ public class Character {
         this.gender = gender;
         this.category = category;
         this.background = background;
+        this.questsInvolved = new ArrayList<>();
     }
 
     @Override
@@ -78,7 +85,9 @@ public class Character {
     }
 
 
-    public Character() {}
+    public Character() {
+        this.questsInvolved = new ArrayList<>();
+    }
 
     public void setId(Long id) {
         this.id = id;

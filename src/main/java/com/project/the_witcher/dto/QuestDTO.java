@@ -6,5 +6,5 @@ import java.util.List;
 public record QuestDTO(
         String title,
         String description,
-        List<Character> characters
+        List<CharacterDTO> characters
 ) {}

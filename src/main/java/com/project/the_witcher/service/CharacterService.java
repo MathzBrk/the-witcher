@@ -33,9 +33,9 @@ public class CharacterService {
         );
     }
 
-    public List<CharacterDTO> convertCharactersToDTO(List<Character> characters) {
+    public static List<CharacterDTO> convertCharactersToDTO(List<Character> characters) {
         return characters.stream()
-                .map(this::convertCharacterToDTO)
+                .map(c -> new CharacterDTO(c.getName(),c.getGender(),c.getCategory(),c.getBackground()))
                 .collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package com.project.the_witcher.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,12 @@ public class Quest {
     private List<Character> characters;
 
     public Quest() {}
+
+    public Quest(String title, String description, List<Character> characters) {
+        this.title = title;
+        this.description = description;
+        this.characters = characters;
+    }
 
     @Override
     public String toString() {

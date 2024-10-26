@@ -6,6 +6,8 @@ public enum MonsterCategory {
     UNDEAD,
     DEMON,
     HUMAN,
+    REPTILE,
+    SPECTER,
     DRAGON;
 
     public static MonsterCategory fromString(String category) {

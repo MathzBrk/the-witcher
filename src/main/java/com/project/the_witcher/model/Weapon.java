@@ -1,5 +1,7 @@
 package com.project.the_witcher.model;
 
+import java.util.List;
+
 public class Weapon extends Item{
 
     private Integer damage;
@@ -12,8 +14,8 @@ public class Weapon extends Item{
         this.damage = damage;
     }
 
-    public Weapon(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, Integer damage) {
-        super(name, description, location, value, type, rarity);
+    public Weapon(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, Integer damage, List<Monster> monsterThatDrop) {
+        super(name, description, location, value, type, rarity, monsterThatDrop);
         this.damage = damage;
     }
 }

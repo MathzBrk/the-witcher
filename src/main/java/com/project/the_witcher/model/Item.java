@@ -2,6 +2,7 @@ package com.project.the_witcher.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,13 +35,14 @@ public class Item {
         this.monsterThatDrop = monsterThatDrop;
     }
 
-    public Item(String name, String description, String location, Double value, ItemType type, ItemRarity rarity) {
+    public Item(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, List<Monster> monsterThatDrop) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.value = value;
         this.type = type;
         this.rarity = rarity;
+        this.monsterThatDrop = monsterThatDrop;
     }
 
     public Item() {

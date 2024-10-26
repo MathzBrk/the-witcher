@@ -14,7 +14,7 @@ public class Monster {
     @Enumerated(EnumType.STRING)
     private MonsterCategory category;
     private String description;
-    @ManyToMany(mappedBy = "monsterThatDrop")
+    @ManyToMany(mappedBy = "monsterThatDrop", cascade = CascadeType.ALL)
     private List<Item> possibleDrops;
 
 
