@@ -1,5 +1,7 @@
 package com.project.the_witcher.model;
 
+import java.util.List;
+
 public class Potion extends Item {
     private String effect;
 
@@ -11,8 +13,8 @@ public class Potion extends Item {
         this.effect = effect;
     }
 
-    public Potion(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, String effect) {
-        super(name, description, location, value, type, rarity);
+    public Potion(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, String effect, List<Monster> monsterThatDrop) {
+        super(name, description, location, value, type, rarity, monsterThatDrop);
         this.effect = effect;
     }
 }

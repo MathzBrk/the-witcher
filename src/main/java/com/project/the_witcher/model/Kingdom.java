@@ -2,6 +2,7 @@ package com.project.the_witcher.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,13 @@ public class Kingdom {
     private List<String> enemies;
 
     public Kingdom(){}
+
+    public Kingdom(String name, String description, List<String> allies, List<String> enemies) {
+        this.name = name;
+        this.description = description;
+        this.allies = allies;
+        this.enemies = enemies;
+    }
 
     public String getName() {
         return name;
