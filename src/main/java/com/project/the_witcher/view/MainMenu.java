@@ -2,12 +2,12 @@ package com.project.the_witcher.view;
 
 import com.project.the_witcher.dto.CharacterDTO;
 import com.project.the_witcher.dto.MonsterDTO;
+import com.project.the_witcher.dto.QuestDTO;
+import com.project.the_witcher.model.*;
 import com.project.the_witcher.model.Character;
-import com.project.the_witcher.model.CharacterCategory;
-import com.project.the_witcher.model.Monster;
-import com.project.the_witcher.model.MonsterCategory;
 import com.project.the_witcher.service.CharacterService;
 import com.project.the_witcher.service.MonsterService;
+import com.project.the_witcher.service.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +23,8 @@ public class MainMenu {
     private CharacterService characterService;
     @Autowired
     private MonsterService monsterService;
+    @Autowired
+    private QuestService questService;
 
     public static void main(String[] args) {
         MainMenu menu = new MainMenu();
@@ -54,6 +56,12 @@ public class MainMenu {
                 case 4:
                     viewMonsters();
                     break;
+                case 5:
+                    viewQuests();
+                    break;
+                case 6:
+                    addQuest();
+                    break;
                 case 0:
                     exit = true;
                     System.out.println("Exiting the program...");
@@ -64,13 +72,35 @@ public class MainMenu {
         }
     }
 
-    // Function to display the main menu
+    private void addQuest() {
+
+    }
+
+    private void viewQuests() {
+        System.out.println("--- Quests ---");
+
+
+        try {
+            List<Quest> quests = questService.getAllQuests();
+
+            if (quests != null && !quests.isEmpty()) {
+                quests.forEach(System.out::println);
+            } else {
+                System.out.println("No quests");
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving quests: " + e.getMessage());
+        }
+    }
+
     public static void printMenu() {
         System.out.println("\n===== MAIN MENU =====");
         System.out.println("1. Add Character");
         System.out.println("2. Add Monster");
         System.out.println("3. View Characters");
         System.out.println("4. View Monsters");
+        System.out.println("5. View Quests");
+        System.out.println("6. Add Quest");
         System.out.println("0. Exit");
         System.out.print("Choose an option: ");
     }
@@ -94,12 +124,45 @@ public class MainMenu {
             characterService.save(character);
 
             System.out.println("Character added successfully!");
+            System.out.println("Wish to add this character to a quest? (Y/N)");
+            String choice = scanner.nextLine().trim().toUpperCase();
+
+            if (choice.equals("Y")) {
+                try {
+                    List<Quest> quests = questService.getAllQuests();
+
+                    if (quests.isEmpty()) {
+                        System.out.println("No quests available to add.");
+                    } else {
+                        quests.forEach(q -> System.out.println("Title: " + q.getTitle()));
+
+                        System.out.println("What quest name would you like to add to this character?");
+                        String questName = scanner.nextLine();
+                        Quest quest = questService.getQuestByTitle(questName);
+
+                        if (quest != null) {
+                            System.out.println("Before add the character to the quest: ");
+                            quest.getCharacters().forEach(System.out::println);
+                            character.addQuest(quest);
+                            quest.addCharacter(character);
+                            questService.save(quest);
+                            System.out.println("After add the character to the quest: ");
+                            quest.getCharacters().forEach(System.out::println);
+                            System.out.println("Quest added successfully!");
+                        } else {
+                            System.out.println("Quest not found.");
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error while trying to add quest: " + e.getMessage());
+                }
+            }
         } catch (Exception e) {
-            System.out.println("Character could not be added!" + e.getMessage());
+            System.out.println("Character could not be added: " + e.getMessage());
         }
     }
 
-    // Function to add a new monster
+
     public void addMonster() {
         System.out.println("\n--- Add New Monster ---");
         System.out.print("Name: ");
@@ -124,11 +187,11 @@ public class MainMenu {
     public void viewCharacters() {
         System.out.println("\n--- Character List ---");
 
-        List<CharacterDTO> characters = characterService.findAllCharacters();
+        List<Character> characters = characterService.findAllCharacters();
 
         if(!characters.isEmpty()) {
             System.out.println("List of registered characters:");
-            characters.forEach(System.out::println);
+            characters.forEach(c -> System.out.println(c.getName() + "Quests: " + c.getQuestsInvolved()));
         }else {
             System.out.println("No registered characters");
         }
