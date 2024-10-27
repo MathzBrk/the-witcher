@@ -38,4 +38,8 @@ public class CharacterService {
                 .map(c -> new CharacterDTO(c.getName(),c.getGender(),c.getCategory(),c.getBackground()))
                 .collect(Collectors.toList());
     }
+
+    public void save( Character character ) {
+        characterRepository.save(character);
+    }
 }
