@@ -25,9 +25,12 @@ public class Quest {
     }
 
     public void addCharacter(Character character) {
-        this.characters.add(character);
-        character.getQuestsInvolved().add(this);
+        if (!characters.contains(character)) {
+            characters.add(character);
+            character.getQuestsInvolved().add(this);
+        }
     }
+
 
     @Override
     public String toString() {

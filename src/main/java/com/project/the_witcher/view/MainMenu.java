@@ -35,14 +35,12 @@ public class MainMenu {
         boolean exit = false;
 
         while (!exit) {
-            // Display the menu
             printMenu();
 
-            // Read the user's choice
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline left by nextInt()
 
-            // Execute action based on the choice
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
             switch (choice) {
                 case 1:
                     addCharacter();
@@ -143,9 +141,8 @@ public class MainMenu {
                         if (quest != null) {
                             System.out.println("Before add the character to the quest: ");
                             quest.getCharacters().forEach(System.out::println);
-                            character.addQuest(quest);
-                            quest.addCharacter(character);
-                            questService.save(quest);
+                            character.getQuestsInvolved().add(quest);
+                            characterService.save(character);
                             System.out.println("After add the character to the quest: ");
                             quest.getCharacters().forEach(System.out::println);
                             System.out.println("Quest added successfully!");
