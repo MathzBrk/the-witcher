@@ -24,7 +24,7 @@ public class CharacterController {
 
     @GetMapping
     public List<CharacterDTO> getAllCharacters() {
-        return characterService.findAllCharacters();
+        return characterService.findAllCharactersDTO();
     }
 
 }

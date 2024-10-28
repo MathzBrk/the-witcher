@@ -15,21 +15,27 @@ public class Character {
     @Enumerated(EnumType.STRING)
     private CharacterCategory category;
     private String background;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "character_quest",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "quest_id")
     )
-    private List<Quest> questsInvolved;
+    private List<Quest> questsInvolved = new ArrayList<>();
 
     public Character(String name, String gender, CharacterCategory category, String background) {
         this.name = name;
         this.gender = gender;
         this.category = category;
         this.background = background;
-        this.questsInvolved = new ArrayList<>();
     }
+
+    public void addQuest(Quest quest) {
+        this.questsInvolved.add(quest);
+        quest.getCharacters().add(this);
+    }
+
+    public Character(){}
 
     @Override
     public String toString() {
@@ -39,7 +45,6 @@ public class Character {
                 ", gender='" + gender + '\'' +
                 ", category=" + category +
                 ", background='" + background + '\'' +
-                ", questsInvolved=" + questsInvolved +
                 '}';
     }
 
@@ -82,11 +87,6 @@ public class Character {
 
     public void setQuestsInvolved(List<Quest> questsInvolved) {
         this.questsInvolved = questsInvolved;
-    }
-
-
-    public Character() {
-        this.questsInvolved = new ArrayList<>();
     }
 
     public void setId(Long id) {

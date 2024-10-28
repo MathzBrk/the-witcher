@@ -13,8 +13,8 @@ public class Quest {
     private Long id;
     private String title;
     private String description;
-    @ManyToMany(mappedBy = "questsInvolved")
-    private List<Character> characters;
+    @ManyToMany(mappedBy = "questsInvolved", fetch = FetchType.EAGER)
+    private List<Character> characters = new ArrayList<>();
 
     public Quest() {}
 
@@ -23,6 +23,14 @@ public class Quest {
         this.description = description;
         this.characters = characters;
     }
+
+    public void addCharacter(Character character) {
+        if (!characters.contains(character)) {
+            characters.add(character);
+            character.getQuestsInvolved().add(this);
+        }
+    }
+
 
     @Override
     public String toString() {

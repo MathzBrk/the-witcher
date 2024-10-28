@@ -17,12 +17,21 @@ public class QuestService {
     @Autowired
     private QuestRepository questRepository;
 
-    public List<QuestDTO> getAllQuests() {
+    public List<QuestDTO> getAllQuestsDTO() {
         return convertQuestsToQuestDTO(questRepository.findAll());
     }
 
-    public QuestDTO getQuestByTitle(String title) {
+    public List<Quest> getAllQuests() {
+        return questRepository.findAll();
+    }
+
+    public QuestDTO getQuestDTOByTitle(String title) {
         return convertQuestToQuestDTO(questRepository.findByTitleContainingIgnoreCase(title));
+    }
+
+
+    public Quest getQuestByTitle(String title) {
+        return questRepository.findByTitleContainingIgnoreCase(title);
     }
 
     public List<QuestDTO> getQuestsByCharacterName(String characterName) {
@@ -38,5 +47,9 @@ public class QuestService {
         return quests.stream()
                 .map(this::convertQuestToQuestDTO)
                 .collect(Collectors.toList());
+    }
+
+    public void save( Quest quest ) {
+        questRepository.saveAndFlush(quest);
     }
 }

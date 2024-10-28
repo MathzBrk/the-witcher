@@ -17,7 +17,11 @@ public class CharacterService {
         return convertCharacterToDTO(characterRepository.findByNameContainingIgnoreCase(name));
     }
 
-    public List<CharacterDTO> findAllCharacters() {
+    public List<Character> findAllCharacters() {
+        return characterRepository.findAll();
+    }
+
+    public List<CharacterDTO> findAllCharactersDTO() {
         return characterRepository.findAll().stream().map(this::convertCharacterToDTO).collect(Collectors.toList());
     }
 
@@ -37,5 +41,10 @@ public class CharacterService {
         return characters.stream()
                 .map(c -> new CharacterDTO(c.getName(),c.getGender(),c.getCategory(),c.getBackground()))
                 .collect(Collectors.toList());
+    }
+
+    public void save( Character character ) {
+        characterRepository.saveAndFlush(character);
+
     }
 }

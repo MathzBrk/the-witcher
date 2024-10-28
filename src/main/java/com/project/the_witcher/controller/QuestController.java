@@ -19,12 +19,12 @@ public class QuestController {
 
     @GetMapping
     public List<QuestDTO> getAllQuests() {
-        return questService.getAllQuests();
+        return questService.getAllQuestsDTO();
     }
 
     @GetMapping("/title/{title}")
     public QuestDTO getQuestsByTitle(@PathVariable String title) {
-        return questService.getQuestByTitle(title);
+        return questService.getQuestDTOByTitle(title);
     }
 
     @GetMapping("/name/{characterName}")

@@ -42,4 +42,7 @@ public class MonsterService {
     }
 
 
+    public void save( Monster monster ) {
+        monsterRepository.save(monster);
+    }
 }

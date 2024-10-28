@@ -3,6 +3,7 @@ package com.project.the_witcher;
 import com.project.the_witcher.model.*;
 import com.project.the_witcher.model.Character;
 import com.project.the_witcher.repository.*;
+import com.project.the_witcher.view.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private QuestRepository questRepository;
+
+    @Autowired
+    private MainMenu mainMenu;
 
     @Override
     public void run( String... args ) throws Exception {
@@ -109,5 +113,9 @@ public class DataLoader implements CommandLineRunner {
         emhyr.getQuestsInvolved().add(quest5);
 
         characterRepository.saveAll(Arrays.asList(geralt, yennefer, ciri, triss, dandelion, emhyr));
+
+        mainMenu.start();
+
+
     }
 }
