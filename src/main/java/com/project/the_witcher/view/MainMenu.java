@@ -1,16 +1,16 @@
 package com.project.the_witcher.view;
 
-import com.project.the_witcher.dto.CharacterDTO;
 import com.project.the_witcher.dto.MonsterDTO;
-import com.project.the_witcher.dto.QuestDTO;
 import com.project.the_witcher.model.*;
 import com.project.the_witcher.model.Character;
+import com.project.the_witcher.repository.QuestRepository;
 import com.project.the_witcher.service.CharacterService;
 import com.project.the_witcher.service.MonsterService;
 import com.project.the_witcher.service.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
@@ -25,6 +25,8 @@ public class MainMenu {
     private MonsterService monsterService;
     @Autowired
     private QuestService questService;
+    @Autowired
+    private QuestRepository questRepository;
 
     public static void main(String[] args) {
         MainMenu menu = new MainMenu();
@@ -71,8 +73,56 @@ public class MainMenu {
     }
 
     private void addQuest() {
+        try {
+            System.out.println("Enter quest title: ");
+            String title = scanner.nextLine();
 
+            System.out.println("Enter quest description: ");
+            String description = scanner.nextLine();
+
+            Quest quest = new Quest();
+            quest.setTitle(title);
+            quest.setDescription(description);
+            questRepository.save(quest);
+
+
+            boolean more = true;
+            while (more) {
+                System.out.println("Would you like to add characters to the quest? (Y/N)");
+                String choice = scanner.nextLine().trim().toUpperCase();
+
+                if (choice.equals("Y")) {
+                    List<Character> characters = characterService.findAllCharacters();
+                    characters.forEach(c -> System.out.println("Character ID: " + c.getId() + ", Name: " + c.getName()));
+
+
+                    System.out.println("Which character id do you want to add?");
+                    Long idCharacter = scanner.nextLong();
+
+                    Character character = characterService.findCharacterById(idCharacter);
+
+                    if (character != null) {
+                        quest.addCharacter(character);
+                        questRepository.save(quest);
+                        characterService.save(character);
+                        System.out.println("Character added successfully.");
+                    } else {
+                        System.out.println("Character not found.");
+                    }
+                } else if (choice.equals("N")) {
+                    more = false;
+                }
+            }
+
+            questService.save(quest);
+            System.out.println("Quest added successfully!");
+
+        } catch (Exception e) {
+            System.out.println("Quest could not be added: " + e.getMessage());
+        }
     }
+
+
 
     private void viewQuests() {
         System.out.println("--- Quests ---");
@@ -122,6 +172,7 @@ public class MainMenu {
             characterService.save(character);
 
             System.out.println("Character added successfully!");
+
             System.out.println("Wish to add this character to a quest? (Y/N)");
             String choice = scanner.nextLine().trim().toUpperCase();
 
@@ -139,12 +190,8 @@ public class MainMenu {
                         Quest quest = questService.getQuestByTitle(questName);
 
                         if (quest != null) {
-                            System.out.println("Before add the character to the quest: ");
-                            quest.getCharacters().forEach(System.out::println);
                             character.getQuestsInvolved().add(quest);
                             characterService.save(character);
-                            System.out.println("After add the character to the quest: ");
-                            quest.getCharacters().forEach(System.out::println);
                             System.out.println("Quest added successfully!");
                         } else {
                             System.out.println("Quest not found.");

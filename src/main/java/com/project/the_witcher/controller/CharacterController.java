@@ -19,7 +19,7 @@ public class CharacterController {
 
     @GetMapping("/{name}")
     public CharacterDTO getCharacterByName(@PathVariable String name) {
-        return characterService.findCharacterByName(name);
+        return characterService.findCharacterDTOByName(name);
     }
 
     @GetMapping

@@ -13,9 +13,15 @@ public class CharacterService {
     @Autowired
     private CharacterRepository characterRepository;
 
-    public CharacterDTO findCharacterByName(String name) {
+    public CharacterDTO findCharacterDTOByName(String name) {
         return convertCharacterToDTO(characterRepository.findByNameContainingIgnoreCase(name));
     }
+
+    public Character findCharacterByName(String name) {
+        return characterRepository.findByNameContainingIgnoreCase(name);
+    }
+
+
 
     public List<Character> findAllCharacters() {
         return characterRepository.findAll();
@@ -23,6 +29,10 @@ public class CharacterService {
 
     public List<CharacterDTO> findAllCharactersDTO() {
         return characterRepository.findAll().stream().map(this::convertCharacterToDTO).collect(Collectors.toList());
+    }
+
+    public Character findCharacterById(Long id) {
+        return characterRepository.findById(id).orElse(null);
     }
 
     public CharacterDTO convertCharacterToDTO(Character character) {
@@ -44,7 +54,8 @@ public class CharacterService {
     }
 
     public void save( Character character ) {
-        characterRepository.saveAndFlush(character);
+        characterRepository.save(character);
 
     }
+
 }
