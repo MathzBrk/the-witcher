@@ -19,7 +19,7 @@ public class MonsterController {
 
     @GetMapping
     public List<MonsterDTO> getAllMonsters() {
-        return monsterService.getAllMonsters();
+        return monsterService.getAllMonstersDTO();
     }
 
     @GetMapping("/name/{name}")

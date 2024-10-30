@@ -25,6 +25,10 @@ public class QuestService {
         return questRepository.findAll();
     }
 
+    public Quest getQuestById(Long id) {
+        return questRepository.findById(id).orElse(null);
+    }
+
     public QuestDTO getQuestDTOByTitle(String title) {
         return convertQuestToQuestDTO(questRepository.findByTitleContainingIgnoreCase(title));
     }

@@ -19,7 +19,7 @@ public class ItemController {
 
     @GetMapping
     public List<ItemDTO> getAllItems() {
-        return itemService.getAllItems();
+        return itemService.getAllItemsDTO();
     }
 
     @GetMapping("/rarity/{rarity}")
