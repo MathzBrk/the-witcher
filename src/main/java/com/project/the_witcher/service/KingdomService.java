@@ -19,6 +19,10 @@ public class KingdomService {
         return new KingdomDTO(kingdom.getName(),kingdom.getDescription(),kingdom.getAllies(),kingdom.getEnemies());
     }
 
+    public Kingdom getKingdomById(Long id) {
+        return kingdomRepository.findById(id).orElse(null);
+    }
+
     public List<KingdomDTO> convertKingdomsToKingdomDTO(List<Kingdom> kingdoms) {
         return kingdoms.stream()
                 .map(this::convertKingdomToKingdomDTO)

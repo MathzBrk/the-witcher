@@ -2,6 +2,7 @@ package com.project.the_witcher.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,8 @@ public class Monster {
     @Enumerated(EnumType.STRING)
     private MonsterCategory category;
     private String description;
+    @ManyToMany(mappedBy = "monsterThatDrop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Item> possibleDrops;
 
     @Override
     public String toString() {
@@ -24,15 +27,21 @@ public class Monster {
                 '}';
     }
 
-    @ManyToMany(mappedBy = "monsterThatDrop", cascade = CascadeType.ALL)
-    private List<Item> possibleDrops;
-
 
     public Monster(String name, MonsterCategory category, String description) {
         this.name = name;
         this.category = category;
         this.description = description;
+        this.possibleDrops = new ArrayList<>();
     }
+
+    public void addItem(Item item) {
+        if (!possibleDrops.contains(item)) {
+            possibleDrops.add(item);
+            item.getMonsterThatDrop().add(this);
+        }
+    }
+
 
     public void setId(Long id) {
         this.id = id;

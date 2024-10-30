@@ -17,7 +17,11 @@ public class MonsterService {
     @Autowired
     private MonsterRepository monsterRepository;
 
-    public List<MonsterDTO> getAllMonsters() {
+    public List<Monster> getAllMonsters() {
+        return monsterRepository.findAll();
+    }
+
+    public List<MonsterDTO> getAllMonstersDTO() {
         return convertMonstersToMonsterDTO(monsterRepository.findAll());
     }
 
@@ -30,6 +34,9 @@ public class MonsterService {
 
     }
 
+    public Monster getMonsterById(Long id) {
+        return monsterRepository.findById(id).orElse(null);
+    }
 
     public MonsterDTO convertMonsterToMonsterDTO(Monster monster) {
         return new MonsterDTO(monster.getName(), monster.getCategory(), monster.getDescription());
@@ -44,5 +51,9 @@ public class MonsterService {
 
     public void save( Monster monster ) {
         monsterRepository.save(monster);
+    }
+
+    public Monster findById( Long id ) {
+        return monsterRepository.findById(id).orElse(null);
     }
 }

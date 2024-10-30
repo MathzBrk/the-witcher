@@ -19,11 +19,11 @@ public class Item {
     private ItemType type;
     @Enumerated(EnumType.STRING)
     private ItemRarity rarity;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "item_monster", // nome da tabela de junção
-            joinColumns = @JoinColumn(name = "item_id"), // coluna que faz referência ao Item
-            inverseJoinColumns = @JoinColumn(name = "monster_id") // coluna que faz referência ao Monster
+            name = "item_monster",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "monster_id")
     )
     private List<Monster> monsterThatDrop;
 
@@ -35,14 +35,18 @@ public class Item {
         this.monsterThatDrop = monsterThatDrop;
     }
 
-    public Item(String name, String description, String location, Double value, ItemType type, ItemRarity rarity, List<Monster> monsterThatDrop) {
+    public Item(String name, String description, String location, Double value, ItemType type, ItemRarity rarity) {
         this.name = name;
         this.description = description;
         this.location = location;
-        this.value = value;
+        if(value != null) {
+            this.value = value;
+        }else{
+            this.value = 0.0;
+        }
         this.type = type;
         this.rarity = rarity;
-        this.monsterThatDrop = monsterThatDrop;
+        this.monsterThatDrop = new ArrayList<>();
     }
 
     public Item() {
@@ -103,5 +107,26 @@ public class Item {
 
     public Long getId() {
         return id;
+    }
+
+    public void addMonster(Monster monster) {
+        if (!monsterThatDrop.contains(monster)) {
+            monsterThatDrop.add(monster);
+            monster.getPossibleDrops().add(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", value=" + value +
+                ", type=" + type +
+                ", rarity=" + rarity +
+                ", monsterThatDrop=" + monsterThatDrop +
+                '}';
     }
 }

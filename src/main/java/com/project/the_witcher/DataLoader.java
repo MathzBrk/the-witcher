@@ -35,7 +35,6 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run( String... args ) throws Exception {
 
-        // Limpar os dados antigos
         characterRepository.deleteAll();
         kingdomRepository.deleteAll();
         monsterRepository.deleteAll();
@@ -80,16 +79,34 @@ public class DataLoader implements CommandLineRunner {
 
 
         Item steelSword = new Item("Steel Sword", "A sturdy sword used to slay monsters.", "Kaer Morhen", 500.00,
-                ItemType.WEAPON, ItemRarity.RARE, Collections.singletonList(griffin));
+                ItemType.WEAPON, ItemRarity.RARE);
         Item healthPotion = new Item("Health Potion", "A potion that restores health.", "Various", 50.00,
-                ItemType.CONSUMABLE, ItemRarity.COMMON, Collections.emptyList());
+                ItemType.CONSUMABLE, ItemRarity.COMMON);
         Item dimeritiumBomb = new Item("Dimeritium Bomb", "A bomb that is effective against magical creatures.", "Skellige", 300.00,
-                ItemType.WEAPON, ItemRarity.EPIC, Collections.singletonList(wraith));
+                ItemType.WEAPON, ItemRarity.EPIC);
         Item silverSword = new Item("Silver Sword", "A sword made of silver, specifically for hunting magical creatures.", "Kaer Morhen", 700.00,
-                ItemType.WEAPON, ItemRarity.EPIC, Arrays.asList(leshen, wraith));
+                ItemType.WEAPON, ItemRarity.EPIC);
         Item swallow = new Item("Swallow Potion", "A potion that significantly accelerates health regeneration.", "Various", 100.00,
-                ItemType.CONSUMABLE, ItemRarity.UNCOMMON, Collections.emptyList());
+                ItemType.CONSUMABLE, ItemRarity.UNCOMMON);
         itemRepository.saveAll(Arrays.asList(steelSword, healthPotion, dimeritiumBomb, silverSword, swallow));
+
+        steelSword.addMonster(griffin);
+        steelSword.addMonster(fiend);
+
+        healthPotion.addMonster(drowners);
+
+        dimeritiumBomb.addMonster(wraith);
+        dimeritiumBomb.addMonster(leshen);
+
+        silverSword.addMonster(griffin);
+        silverSword.addMonster(basilisk);
+
+        swallow.addMonster(drowners);
+        swallow.addMonster(wraith);
+
+        itemRepository.saveAll(Arrays.asList(steelSword, healthPotion, dimeritiumBomb, silverSword, swallow));
+        monsterRepository.saveAll(Arrays.asList(griffin, basilisk, wraith, leshen, drowners, fiend));
+
 
 
         Quest quest1 = new Quest("The Beast of Toussaint", "Investigate the mysterious beast terrorizing the countryside.",
@@ -104,7 +121,6 @@ public class DataLoader implements CommandLineRunner {
                 Collections.singletonList(emhyr));
         questRepository.saveAll(Arrays.asList(quest1, quest2, quest3, quest4, quest5));
 
-        // Atribuir personagens às quests
         geralt.getQuestsInvolved().addAll(Arrays.asList(quest1, quest2, quest4));
         yennefer.getQuestsInvolved().add(quest3);
         ciri.getQuestsInvolved().addAll(Arrays.asList(quest2, quest4));

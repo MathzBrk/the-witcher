@@ -17,14 +17,22 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public List<ItemDTO> getAllItems(){
-       return convertToDTOs(itemRepository.findAll());
+    public List<Item> getAllItems(){
+       return itemRepository.findAll();
+    }
+
+    public List<ItemDTO> getAllItemsDTO(){
+        return convertToDTOs(itemRepository.findAll());
     }
 
     public List<ItemDTO> convertToDTOs(List<Item> items){
         return items.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Item getItemById(Long id){
+        return itemRepository.findById(id).orElse(null);
     }
 
     public ItemDTO convertToDTO(Item item){
@@ -40,5 +48,9 @@ public class ItemService {
     public List<ItemDTO> findByType(String type) {
         ItemType itemType = ItemType.fromString(type);
        return convertToDTOs(itemRepository.findByType(itemType));
+    }
+
+    public void save( Item item ) {
+        itemRepository.save(item);
     }
 }
