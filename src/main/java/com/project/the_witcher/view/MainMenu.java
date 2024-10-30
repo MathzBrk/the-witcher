@@ -332,7 +332,7 @@ public class MainMenu {
 
         if(!characters.isEmpty()) {
             System.out.println("List of registered characters:");
-            characters.forEach(c -> System.out.println(c.getName() + "Quests: " + c.getQuestsInvolved()));
+            characters.forEach(System.out::println);
         }else {
             System.out.println("No registered characters");
         }
