@@ -14,6 +14,16 @@ public class Monster {
     @Enumerated(EnumType.STRING)
     private MonsterCategory category;
     private String description;
+
+    @Override
+    public String toString() {
+        return "Monster{" +
+                "name='" + name + '\'' +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     @ManyToMany(mappedBy = "monsterThatDrop", cascade = CascadeType.ALL)
     private List<Item> possibleDrops;
 

@@ -8,6 +8,7 @@ public enum CharacterCategory {
     MERCHANT("Trader of goods"),
     SOLDIER("Member of the military"),
     SORCERESS("Female magic user"),
+    DWARF("A person smaller than others"),
     WITCHER("Monster hunter with special abilities");
 
     private final String description;

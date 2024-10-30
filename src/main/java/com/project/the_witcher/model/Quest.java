@@ -35,7 +35,6 @@ public class Quest {
     @Override
     public String toString() {
         return "Quest{" +
-                "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", characters=" + characters +
